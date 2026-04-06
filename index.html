@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Эко-патруль — AR квест</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image.prod.js"></script>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-aframe.prod.js"></script>
+</head>
+<body>
+    <div class="score-panel">
+        <div class="score-box">
+            <span class="score-label">🌍 НАЙДЕНО</span>
+            <span class="score-value" id="scoreValue">0</span>
+            <span class="score-total">/4</span>
+        </div>
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+        <div class="info-title">Эко-патруль</div>
+        <div class="info-text" id="infoText">Наведи камеру на предметы: 🔋 батарейку, 🍼 бутылку, 🥤 стаканчик, 💨 баллончик</div>
+    </div>
+
+    <button class="start-btn" id="startBtn">📷 ЗАПУСТИТЬ КАМЕРУ</button>
+
+    <a-scene id="scene" mindar-image="imageTargetSrc: targets.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+        <a-camera active="true" position="0 0 0"></a-camera>
+        
+        <a-entity mindar-image-target="targetIndex: 0">
+            <a-plane position="0 0 0" width="0.6" height="0.35" color="#FF5722" opacity="0.9" material="side: double">
+                <a-text value="🔋 БАТАРЕЙКА: Одна батарейка загрязняет 20 м² земли или 400 литров воды. Содержит ртуть, свинец и кадмий!" align="center" position="0 0 0.01" width="1.2" color="white" wrap-count="30"></a-text>
+            </a-plane>
+        </a-entity>
+
+        <a-entity mindar-image-target="targetIndex: 1">
+            <a-plane position="0 0 0" width="0.6" height="0.35" color="#4CAF50" opacity="0.9" material="side: double">
+                <a-text value="🍼 БУТЫЛКА: Разлагается 450 лет! Убивает морских животных и выделяет микропластик, который попадает в нашу еду и воду." align="center" position="0 0 0.01" width="1.2" color="white" wrap-count="30"></a-text>
+            </a-plane>
+        </a-entity>
+
+        <a-entity mindar-image-target="targetIndex: 2">
+            <a-plane position="0 0 0" width="0.6" height="0.35" color="#2196F3" opacity="0.9" material="side: double">
+                <a-text value="🥤 СТАКАНЧИК: Для 1000 стаканов нужно 1 дерево. Внутри пластиковая плёнка, которая НЕ перерабатывается!" align="center" position="0 0 0.01" width="1.2" color="white" wrap-count="30"></a-text>
+            </a-plane>
+        </a-entity>
+
+        <a-entity mindar-image-target="targetIndex: 3">
+            <a-plane position="0 0 0" width="0.6" height="0.35" color="#9C27B0" opacity="0.9" material="side: double">
+                <a-text value="💨 БАЛЛОНЧИК: Разрушает озоновый слой, вызывает смог и болезни дыхания. Выбирай без аэрозоля!" align="center" position="0 0 0.01" width="1.2" color="white" wrap-count="30"></a-text>
+            </a-plane>
+        </a-entity>
+    </a-scene>
+
+    <script src="script.js"></script>
+</body>
+</html>
