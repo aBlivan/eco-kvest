@@ -2,10 +2,10 @@ let foundItems = 0;
 const totalItems = 4;
 let collected = [false, false, false, false];
 let gameFinished = false;
+let arStarted = false;
 
 const scoreElement = document.getElementById('scoreValue');
 const infoTextElement = document.getElementById('infoText');
-const startBtn = document.getElementById('startBtn');
 const scene = document.getElementById('scene');
 
 function updateScore() {
@@ -56,32 +56,22 @@ function onTargetFound(targetIndex) {
     }
 }
 
-async function startAR() {
-    startBtn.textContent = "🔄 ЗАПУСК...";
-    startBtn.disabled = true;
+// Автоматический запуск AR при загрузке
+window.addEventListener('load', async () => {
+    infoTextElement.textContent = "Запуск камеры...";
     
-    try {
+    setTimeout(async () => {
         try {
-            await scene.components['mindar-image'].stop();
-        } catch(e) {}
-        
-        await scene.components['mindar-image'].start();
-        startBtn.style.display = 'none';
-        infoTextElement.textContent = "Камера работает! Наведи на: батарейку, бутылку, стаканчик, баллончик";
-        
-        const video = document.querySelector('video');
-        if (video && video.paused) {
-            video.play();
+            await scene.components['mindar-image'].start();
+            arStarted = true;
+            infoTextElement.textContent = "Камера работает! Наведи на: батарейку, бутылку, стаканчик, баллончик";
+        } catch (err) {
+            console.error(err);
+            infoTextElement.textContent = "Ошибка камеры. Обнови страницу и разреши доступ к камере.";
         }
-    } catch (err) {
-        console.error(err);
-        startBtn.textContent = "❌ НАЖМИ СНОВА";
-        startBtn.disabled = false;
-        infoTextElement.textContent = "Нажми кнопку ещё раз. Если не работает — обнови страницу.";
-    }
-}
-
-window.addEventListener('load', () => {
+    }, 500);
+    
+    // Слушаем нахождение целей
     setTimeout(() => {
         const sceneEl = document.querySelector('a-scene');
         if (sceneEl) {
@@ -92,5 +82,3 @@ window.addEventListener('load', () => {
         }
     }, 1000);
 });
-
-startBtn.addEventListener('click', startAR);
