@@ -2,7 +2,6 @@ let foundItems = 0;
 const totalItems = 4;
 let collected = [false, false, false, false];
 let gameFinished = false;
-let arStarted = false;
 
 const scoreElement = document.getElementById('scoreValue');
 const infoTextElement = document.getElementById('infoText');
@@ -63,7 +62,6 @@ window.addEventListener('load', async () => {
     setTimeout(async () => {
         try {
             await scene.components['mindar-image'].start();
-            arStarted = true;
             infoTextElement.textContent = "Камера работает! Наведи на: батарейку, бутылку, стаканчик, баллончик";
         } catch (err) {
             console.error(err);
@@ -71,7 +69,6 @@ window.addEventListener('load', async () => {
         }
     }, 500);
     
-    // Слушаем нахождение целей
     setTimeout(() => {
         const sceneEl = document.querySelector('a-scene');
         if (sceneEl) {
