@@ -71,29 +71,6 @@ body {
     line-height: 1.4;
 }
 
-.start-btn {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #4CAF50;
-    color: white;
-    border: none;
-    padding: 14px 30px;
-    border-radius: 50px;
-    font-size: 18px;
-    font-weight: bold;
-    z-index: 200;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    font-family: inherit;
-}
-
-.start-btn:hover {
-    background: #45a049;
-    transform: translateX(-50%) scale(1.02);
-}
-
 .congrats {
     position: fixed;
     top: 50%;
