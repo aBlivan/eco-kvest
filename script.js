@@ -61,26 +61,36 @@ async function startAR() {
     startBtn.disabled = true;
     
     try {
-        const mindarImage = scene.components['mindar-image'];
-        await mindarImage.start();
+        try {
+            await scene.components['mindar-image'].stop();
+        } catch(e) {}
+        
+        await scene.components['mindar-image'].start();
         startBtn.style.display = 'none';
         infoTextElement.textContent = "Камера работает! Наведи на: батарейку, бутылку, стаканчик, баллончик";
+        
+        const video = document.querySelector('video');
+        if (video && video.paused) {
+            video.play();
+        }
     } catch (err) {
         console.error(err);
-        startBtn.textContent = "❌ ОШИБКА. НАЖМИ СНОВА";
+        startBtn.textContent = "❌ НАЖМИ СНОВА";
         startBtn.disabled = false;
-        infoTextElement.textContent = "Не удалось запустить камеру. Проверь разрешения и нажми кнопку ещё раз.";
+        infoTextElement.textContent = "Нажми кнопку ещё раз. Если не работает — обнови страницу.";
     }
 }
-
-startBtn.addEventListener('click', startAR);
 
 window.addEventListener('load', () => {
     setTimeout(() => {
         const sceneEl = document.querySelector('a-scene');
-        sceneEl.addEventListener('mindar-image-target-found', (e) => {
-            const targetIndex = e.detail.targetIndex;
-            onTargetFound(targetIndex);
-        });
+        if (sceneEl) {
+            sceneEl.addEventListener('mindar-image-target-found', (e) => {
+                const targetIndex = e.detail.targetIndex;
+                onTargetFound(targetIndex);
+            });
+        }
     }, 1000);
 });
+
+startBtn.addEventListener('click', startAR);
